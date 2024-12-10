@@ -626,6 +626,7 @@ Datetimelike
 - Bug in :meth:`DatetimeIndex.union` and :meth:`DatetimeIndex.intersection` when ``unit`` was non-nanosecond (:issue:`59036`)
 - Bug in :meth:`Series.dt.microsecond` producing incorrect results for pyarrow backed :class:`Series`. (:issue:`59154`)
 - Bug in :meth:`to_datetime` not respecting dayfirst if an uncommon date string was passed. (:issue:`58859`)
+- Bug in :meth:`to_datetime` on float32 df with year, month, day etc. columns leads to precision issues and incorrect result. (:issue:`60506`)
 - Bug in :meth:`to_datetime` reports incorrect index in case of any failure scenario. (:issue:`58298`)
 - Bug in :meth:`to_datetime` wrongly converts when ``arg`` is a ``np.datetime64`` object with unit of ``ps``. (:issue:`60341`)
 - Bug in setting scalar values with mismatched resolution into arrays with non-nanosecond ``datetime64``, ``timedelta64`` or :class:`DatetimeTZDtype` incorrectly truncating those scalars (:issue:`56410`)
@@ -733,6 +734,7 @@ Groupby/resample/rolling
 - Bug in :meth:`.Resampler.interpolate` on a :class:`DataFrame` with non-uniform sampling and/or indices not aligning with the resulting resampled index would result in wrong interpolation (:issue:`21351`)
 - Bug in :meth:`DataFrame.ewm` and :meth:`Series.ewm` when passed ``times`` and aggregation functions other than mean (:issue:`51695`)
 - Bug in :meth:`DataFrameGroupBy.agg` that raises ``AttributeError`` when there is dictionary input and duplicated columns, instead of returning a DataFrame with the aggregation of all duplicate columns. (:issue:`55041`)
+- Bug in :meth:`DataFrameGroupBy.apply` and :meth:`SeriesGroupBy.apply` for empty data frame with ``group_keys=False`` still creating output index using group keys. (:issue:`60471`)
 - Bug in :meth:`DataFrameGroupBy.apply` that was returning a completely empty DataFrame when all return values of ``func`` were ``None`` instead of returning an empty DataFrame with the original columns and dtypes. (:issue:`57775`)
 - Bug in :meth:`DataFrameGroupBy.apply` with ``as_index=False`` that was returning :class:`MultiIndex` instead of returning :class:`Index`. (:issue:`58291`)
 - Bug in :meth:`DataFrameGroupBy.cumsum` and :meth:`DataFrameGroupBy.cumprod` where ``numeric_only`` parameter was passed indirectly through kwargs instead of passing directly. (:issue:`58811`)
@@ -797,6 +799,8 @@ Other
 - Bug in :meth:`read_csv` where chained fsspec TAR file and ``compression="infer"`` fails with ``tarfile.ReadError`` (:issue:`60028`)
 - Bug in Dataframe Interchange Protocol implementation was returning incorrect results for data buffers' associated dtype, for string and datetime columns (:issue:`54781`)
 - Bug in ``Series.list`` methods not preserving the original :class:`Index`. (:issue:`58425`)
+- Bug in ``Series.list`` methods not preserving the original name. (:issue:`60522`)
+- Bug in printing a :class:`DataFrame` with a :class:`DataFrame` stored in :attr:`DataFrame.attrs` raised a ``ValueError`` (:issue:`60455`)
 
 .. ***DO NOT USE THIS SECTION***
 
